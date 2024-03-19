@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <!-- Tree View -->
+    <record id="view_vacant_position_tree" model="ir.ui.view">
+        <field name="name">vacant.position.tree</field>
+        <field name="model">vacant.position</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="grade"/>
+                <field name="vacant_number"/>
+                <field name="job_id"/>
+                <field name="category_id"/>
+                <field name="fy_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_vacant_position_form" model="ir.ui.view">
+        <field name="name">vacant.position.form</field>
+        <field name="model">vacant.position</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="load_vacant_pay_components" string="Load" type="object" class="oe_highlight" states="draft"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" states="draft"/>
+                    <button name="action_cancel" type="object" string="Cancel" class="oe_highlight"
+                            attrs="{'invisible' : ['|', ('id', '=', False), ('state', '!=', 'draft')]}"
+                            confirm="Are you sure you want to cancel this record?"/>
+
+                    <button name="action_draft" type="object" string="Reset to Draft" class="oe_highlight" states="cancel"/>
+                   	<field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="grade" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="category_id" required="1" domain="[('status', '=', 'confirm')]" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="job_id" attrs="{'required':[('is_unified','!=', True)], 'readonly':[('state','!=','draft')]}" 
+                            	domain="[('category_id', '=', category_id),('status', '=', 'confirm')]"/>
+                        	<field name="budget_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                        	<field name="vacant_number"/>
+                            <field name="fy_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <label for="date_from" string="Period"/>
+                            <div>
+                                <div name="date_edit_only" class="o_row oe_edit_only">
+                                    <field name="date_from" class='oe_inline' readonly="1" force_save="1" required="1"/>
+                                    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                    <field name="date_to" class='oe_inline' readonly="1" force_save="1" required="1"/>
+                                </div>
+                                <div name="date_read_only" class="o_row oe_read_only">
+                                    <span attrs="{'invisible': [('date_from', '=', False)]}">From
+                                        <field name="date_from" class='oe_inline' attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </span>
+                                    <span attrs="{'invisible': [('date_to', '=', False)]}">To
+                                        <field name="date_to" class='oe_inline' attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="is_unified" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Vacant Position Lines">
+                            <field name="vacant_position_line" attrs="{'readonly':[('state','!=','draft')]}">
+                                <tree create="false" editable="bottom">
+                                    <field name="pay_component_id" required="1" string="Budget Account Component" domain="[('status', '=', 'active')]"/>
+                                    <field name="project_id" required="1"/>
+                                    <field name="activity_id" required="1" domain="[('project_id', '=', project_id),('parent_id', '=', False)]"/>
+                                    <field name="sub_activity_id" domain="[('project_id', '=', project_id), ('parent_id', '=', activity_id)]"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                                <form create="0">
+                                    <group>
+                                        <field name="pay_component_id" string="Budget Account Component"/>
+                                        <field name="project_id"/>
+                                        <field name="activity_id"/>
+                                        <field name="sub_activity_id"/>
+                                        <field name="amount"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group colspan="4">
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="total_amount" class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_vacant_position_record" model="ir.actions.act_window">
+        <field name="name">Vacant Positions</field>
+        <field name="res_model">vacant.position</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage vacant positions.
+            </p>
+        </field>
+    </record>
+</odoo>

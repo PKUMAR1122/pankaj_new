@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<odoo>
+        <!-- Merge Records Wizard  -->
+        <record id="merge_records_form" model="ir.ui.view">
+            <field name="name">merge.records.form</field>
+            <field name="model">merge.records</field>
+            <field name="arch" type="xml">
+                <form string="Merge Records">
+                    <sheet>
+                        <group string="Assign opportunities to">
+                            <group>
+                                <field name="merge_record_type"/>
+                            </group>
+                            <group>
+                                <field name="lead_id" attrs="{'invisible': [('merge_record_type', '!=', 'keep_a_remove_b')]}"/>
+                            </group>
+                        </group>
+                        <group string="Select Leads" attrs="{'invisible': [('merge_record_type', '!=', 'keep_a_remove_b')]}" readonly="1">
+                            <field name="opportunity_ids" nolabel="1" colspan="2">
+<!--                                 <tree decoration-success="actives == True">-->
+                                <tree>
+<!--                                    <field name="actives"/>-->
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="contact_name"/>
+                                    <field name="email_from"/>
+                                    <field name="phone"/>
+                                    <field name="user_id"/>
+                                    <field name="team_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Check which records you want to merge" attrs="{'invisible': [('merge_record_type', '!=', 'combination')]}">
+                            <group>
+                                <field name="radio_name" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_email" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_contact_name" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_phones" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_partner_id" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_partner_name" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_user" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_team" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_street" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_website" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_function" widget="radio" options="{'horizontal': true}"/>
+                                <field name="radio_mobile" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                        </group>
+<!--                        <group>-->
+<!--                            <field name="radio_char_fields" widget="selection"/>-->
+<!--                        </group>-->
+                    </sheet>
+                    <footer>
+                        <button name="merge_records" type="object" string="Merge Records" class="btn-primary" data-hotkey="q" attrs="{'invisible': [('merge_record_type', '!=', 'keep_a_remove_b')]}"/>
+                        <button name="create_new_record" type="object" string="Create Records" class="btn-primary" data-hotkey="q" attrs="{'invisible': [('merge_record_type', '!=', 'combination')]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_merge_records" model="ir.actions.act_window">
+            <field name="name">Merge Records</field>
+            <field name="res_model">merge.records</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_crm_lead"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+</odoo>

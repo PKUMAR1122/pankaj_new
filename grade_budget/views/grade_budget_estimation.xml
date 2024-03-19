@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+	 <record id="final_budget_estimation_view_form_inherit" model="ir.ui.view">
+		<field name="name">final.budget.estimation.form</field>
+		<field name="model">final.budget.estimation</field>
+		<field name="inherit_id" ref="budget.final_budget_estimation_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='load_lines']" position="after">
+                <button name="grade_load_lines" string="Load Estimations" type="object" class="oe_highlight"
+                    	attrs="{'invisible':['|', ('type','!=','grade_budget'), ('state','!=','draft')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="grade" 
+                	attrs="{'readonly':[('state','!=','draft')],'invisible':[('type','!=','grade_budget')], 
+   							'required':[('type','=','grade_budget')]}"/>
+                <field name="category_id" domain="[('status', '=', 'confirm')]" 
+                	attrs="{'readonly':[('state','!=','draft')],'invisible':[('type','!=','grade_budget')], 
+   							'required':[('type','=','grade_budget')]}"/>
+                <field name="job_id" domain="[('category_id', '=', category_id), ('status', '=', 'confirm')]" 
+                	attrs="{'readonly':[('state','!=','draft')],'invisible':[('type','!=','grade_budget')], 
+   							'required':[('is_unified','!=', True),('type','=','grade_budget')]}"/>
+            	<!-- <field name="budget_id"
+            		attrs="{'readonly':[('state','!=','draft')],'invisible':[('type','!=','grade_budget')], 
+   							'required':[('type','=','grade_budget')]}"/> -->
+   							
+   				<field name="is_unified" invisible="1" />
+            </xpath>
+		</field>
+	 </record>
+
+     <record model="ir.actions.act_window" id="action_grade_budget_estimation_view">
+        <field name="name">Grade Budget Estimation</field>
+        <field name="res_model">final.budget.estimation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="budget.final_budget_estimation_view_tree"/>
+        <field name="domain">[('type', '=', 'grade_budget')]</field>
+        <field name="context">{'default_type': 'grade_budget'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to create a new grade budget estimation.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_grade_budget_management" name="Grade Budget" sequence="20" groups="grade_budget.group_grade_budget"/>
+
+    <menuitem id="menu_grade_budget_confi" name=" Grade Budget Configuration" parent="menu_grade_budget_management" sequence="1"/>
+
+    <menuitem id="menu_grade_budget_position" name="Position Details" parent="menu_grade_budget_management" sequence="3"/>
+
+
+    <menuitem id="menu_pay_component_list" name="Budget Account Components" parent="menu_grade_budget_confi" action="action_pay_component" sequence="1"/>
+
+    <menuitem id="menu_grade_list" name="Grade" parent="menu_grade_budget_confi" action="action_grade_record" sequence="2"/>
+
+    <menuitem id="menu_grade_category" name="Grade Category" parent="menu_grade_budget_confi" action="action_grade_category_record" sequence="3"/>
+
+    <menuitem id="menu_grade_job" name="Grade Job" parent="menu_grade_budget_confi" action="action_grade_job_record" sequence="4"/>
+
+    <menuitem id="menu_grade_category_job" name="Grade Category Job Mapping" parent="menu_grade_budget_confi" action="action_grade_category_job_record" sequence="5"/>
+
+    <menuitem id="menu_vacant_position_list" name="Vacant Position" parent="menu_grade_budget_position" action="action_vacant_position_record" sequence="6"/>
+
+    <menuitem id="menu_new_position_list" name="New Position" parent="menu_grade_budget_position" action="action_new_position_record" sequence="7"/>
+
+    <menuitem id="menu_grade_budget_estimation" name="Grade Budget Estimation" parent="menu_grade_budget_management" action="action_grade_budget_estimation_view" sequence="9"/>
+
+<!--     <menuitem id="menu_grade_budget_list" name="Grade Budget" parent="menu_grade_budget_management" action="act_final_grade_budget_view"/> -->
+
+</odoo>

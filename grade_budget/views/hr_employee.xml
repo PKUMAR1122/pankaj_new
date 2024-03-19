@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="other_account_detail_form_view" model="ir.ui.view">
+            <field name="name">other.account.detail.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile_phone']" position="before">
+                    <field name="name_arabic"/>
+                </xpath>
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="job_id"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[@name='hr_settings']" position="after">
+                    <page string="Other">
+                        <group>
+                            <group>
+                                <field name="civil_service_no"/>
+                                <field name="emp_no"/>
+                                <field name="manpower_no"/>
+                                <field name="doj"/>
+                                <!--                                <field name="dob"/>-->
+                                <!--                                <field name="passport_no"/>-->
+                                <field name="civil_id_no"/>
+                                <field name="date_of_occupation"/>
+                                <field name="status"/>
+                                <field name="qualification" invisible="1"/>
+                                <field name="specialization" invisible="1"/>
+                                <field name="educational_institution" invisible="1"/>
+                                <field name="graduation_country" invisible="1"/>
+                                <field name="date_of_qualification" invisible="1"/>
+                                <field name="job" invisible="1"/>
+                                <!--                                <field name="position"/>-->
+                                <field name="section" domain="[('department_id', '=', department_id)]"/>
+                                <!--                                <field name="department"/>-->
+                                <field name="directorate" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="sector" invisible="1"/>
+                                <field name="government_entity" invisible="1"/>
+                                <!--                                <field name="budjet"/>-->
+                                <field name="budjet_name" invisible="1"/>
+                                <field name="leave_credit" invisible="1"/>
+                                <field name="basic_salary" invisible="1"/>
+                                <field name="transfer_allow" invisible="1"/>
+                                <field name="accommodation" invisible="1"/>
+                                <field name="electricity" invisible="1"/>
+                                <field name="water" invisible="1"/>
+                                <field name="cost_of_living_allow" invisible="1"/>
+                                <field name="work_nature_allow" invisible="1"/>
+                                <field name="other_allow" invisible="1"/>
+                                <field name="retirement_fund_deduction" invisible="1"/>
+                                <field name="other_deduction" invisible="1"/>
+                                <field name="total" invisible="1"/>
+                                <field name="bank_name" invisible="1"/>
+                                <field name="bank_code" invisible="1"/>
+                                <field name="branch" invisible="1"/>
+                                <field name="branch_code" invisible="1"/>
+                                <!--                                <field name="account_number"/>-->
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="budget_id" options="{'no_open': True,'no_create': True}" required="1"/>
+                    <field name="project_id" required="1"/>
+                    <field name="activity_id" required="1" domain="[('project_id', '=', project_id),('parent_id', '=', False)]"/>
+                    <field name="sub_activity_id" domain="[('project_id', '=', project_id), ('parent_id', '=', activity_id)]"/>
+					<field name="grade" required="1"/>
+                    <field name="category_id" required="1" domain="[('status', '=', 'confirm')]"/>
+                    <field name="grade_job_id" domain="[('category_id', '=', category_id),('status', '=', 'confirm')]"
+                    	attrs="{'required':[('is_unified','!=', True)]}" />
+                    <field name="is_unified" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='coach_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='status']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_of_occupation']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

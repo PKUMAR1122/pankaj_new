@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pay_component,pay.component,model_pay_component,base.group_user,1,1,1,1
+access_grade,grade,model_grade,base.group_user,1,1,1,1
+access_employee_contract,employee.contract,model_employee_contract,base.group_user,1,1,1,1
+access_employee_contract_lines,employee.contract.lines,model_employee_contract_lines,base.group_user,1,1,1,1
+access_vacant_position,vacant.position,model_vacant_position,base.group_user,1,1,1,1
+access_vacant_position_lines,vacant.position.lines,model_vacant_position_lines,base.group_user,1,1,1,1
+access_new_position,new.position,model_new_position,base.group_user,1,1,1,1
+access_new_position_lines,new.position.lines,model_new_position_lines,base.group_user,1,1,1,1
+access_grade_category,grade.category,model_grade_category,base.group_user,1,1,1,1
+access_grade_job,grade.job,model_grade_job,base.group_user,1,1,1,1
+access_grade_category_job_mapping,grade.category.job.mapping,model_grade_category_job_mapping,base.group_user,1,1,1,1
+access_grade_category_job_lines,grade.category.job.lines,model_grade_category_job_lines,base.group_user,1,1,1,1
